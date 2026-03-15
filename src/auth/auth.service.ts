@@ -1,26 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { RegisterUseCase } from './application/use-cases/register.use-case';
+import type { RegisterInput } from './application/use-cases/register.use-case';
+import { LoginUseCase } from './application/use-cases/login.use-case';
+import type { LoginInput } from './application/use-cases/login.use-case';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    private readonly registerUseCase: RegisterUseCase,
+    private readonly loginUseCase: LoginUseCase,
+  ) {}
+
+  async register(input: RegisterInput) {
+    try {
+      return await this.registerUseCase.execute(input);
+    } catch (error) {
+      if (error.message === 'User already exists') {
+        throw new BadRequestException('User already exists');
+      }
+      throw error;
+    }
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async login(input: LoginInput) {
+    try {
+      return await this.loginUseCase.execute(input);
+    } catch (error) {
+      if (error.message === 'Invalid credentials') {
+        throw new UnauthorizedException('Invalid credentials');
+      }
+      throw error;
+    }
   }
 }
