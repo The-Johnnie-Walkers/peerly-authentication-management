@@ -26,7 +26,7 @@ export class LoginUseCase {
       throw new Error('Invalid credentials');
     }
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id, email: user.email, iss: 'peerly-api' };
     const token = await this.jwtService.signAsync(payload);
 
     if (user.id) {
