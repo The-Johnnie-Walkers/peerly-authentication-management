@@ -6,6 +6,8 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { RegisterUseCase } from './application/use-cases/register.use-case';
 import { LoginUseCase } from './application/use-cases/login.use-case';
+import { RequestResetUseCase } from './application/use-cases/request-reset.use-case';
+import { ResetPasswordUseCase } from './application/use-cases/reset-password.use-case';
 import { MongoUserRepository } from './infrastructure/repositories/mongo-user.repository';
 import { UserDocument, UserSchema } from './infrastructure/schemas/user.schema';
 import { AuthGuard } from './guard/auth.guard';
@@ -33,6 +35,8 @@ import { AuthGuard } from './guard/auth.guard';
     AuthService,
     RegisterUseCase,
     LoginUseCase,
+    RequestResetUseCase,
+    ResetPasswordUseCase,
     MongoUserRepository,
     AuthGuard,
   ],
