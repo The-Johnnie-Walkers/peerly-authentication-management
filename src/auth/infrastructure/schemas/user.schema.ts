@@ -14,6 +14,12 @@ export class UserDocument extends Document {
 
   @Prop()
   token: string;
+
+  @Prop()
+  resetToken: string;
+
+  @Prop()
+  resetTokenExpiry: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);
