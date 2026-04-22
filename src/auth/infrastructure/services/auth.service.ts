@@ -1,10 +1,10 @@
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
-import { RegisterUseCase } from './application/use-cases/register.use-case';
-import type { RegisterInput } from './application/use-cases/register.use-case';
-import { LoginUseCase } from './application/use-cases/login.use-case';
-import type { LoginInput } from './application/use-cases/login.use-case';
-import { RequestInput, RequestResetUseCase } from './application/use-cases/request-reset.use-case';
-import { ResetInput, ResetPasswordUseCase } from './application/use-cases/reset-password.use-case';
+import { RegisterUseCase } from '../../application/use-cases/register.use-case';
+import type { RegisterInput } from '../../application/use-cases/register.use-case';
+import { LoginUseCase } from '../../application/use-cases/login.use-case';
+import type { LoginInput } from '../../application/use-cases/login.use-case';
+import { RequestInput, RequestResetUseCase } from '../../application/use-cases/request-reset.use-case';
+import { ResetInput, ResetPasswordUseCase } from '../../application/use-cases/reset-password.use-case';
 
 @Injectable()
 export class AuthService {
