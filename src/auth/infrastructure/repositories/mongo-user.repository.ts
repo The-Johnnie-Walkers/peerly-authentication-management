@@ -17,7 +17,7 @@ export class MongoUserRepository implements IUserRepository, OnModuleInit {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const user = await this.userModel.findOne({ email }).exec();
+    const user = await this.userModel.findOne({ email: email }).exec();
     if (!user) return null;
     return this.mapToUser(user);
   }
