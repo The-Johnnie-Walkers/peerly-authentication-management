@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { MongoUserRepository } from "src/auth/infrastructure/repositories/mongo-user.repository";
+import { MongoUserRepository } from "../../infrastructure/repositories/mongo-user.repository";
 import * as bcrypt from 'bcrypt';
 
 

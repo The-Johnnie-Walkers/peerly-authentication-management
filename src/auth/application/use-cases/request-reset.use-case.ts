@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { MongoUserRepository } from 'src/auth/infrastructure/repositories/mongo-user.repository';
-import { EmailService } from 'src/auth/infrastructure/services/email.service';
+import { MongoUserRepository } from '../../infrastructure/repositories/mongo-user.repository';
+import { EmailService } from '../../infrastructure/services/email.service';
 
 export interface RequestInput {
   email: string;
