@@ -29,11 +29,17 @@ jobs:
         with:
           node-version: '22.x'
 
-      - name: pnpm install, build, and test
+      - name: Install dependencies and build
         run: |
           pnpm install --frozen-lockfile
           pnpm run build 
           pnpm run test --passWithNoTests
+      
+      - name: Prepare production artifact
+        run: |
+          cp package.json dist/
+          cd dist
+          npm install --omit=dev
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
