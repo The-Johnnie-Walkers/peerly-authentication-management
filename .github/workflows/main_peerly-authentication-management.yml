@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main
-      - develop
+      - Feature
   workflow_dispatch:
 
 jobs:
