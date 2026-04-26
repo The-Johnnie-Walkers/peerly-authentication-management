@@ -12,7 +12,7 @@ import { AuthModule } from './auth/auth.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule.forRoot({envFilePath: '.env', isGlobal: true})],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('DB_URI') ?? 'mongodb://localhost:27017/peerly-auth',
+        uri: configService.get<string>('DB_URI'),
       }),
       inject: [ConfigService],
     }),
