@@ -74,4 +74,5 @@ jobs:
           app-name: 'peerly-authentication-management'
           slot-name: 'Production'
           package: .
+          clean: true
           
