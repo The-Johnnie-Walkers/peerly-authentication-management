@@ -1,0 +1,78 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy Node.js app to Azure Web App - peerly-authentication-management
+
+on:
+  push:
+    branches:
+      - main
+      - Feature
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read #This is required for actions/checkout
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Install dependencies and build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build 
+          pnpm run test --passWithNoTests
+      
+      - name: Prepare production artifact
+        run: |
+          cp package.json dist/
+          cd dist
+          npm install --omit=dev
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-app
+          path: dist/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: node-app
+      
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A9D30BC4AB67401DB828B2F06212FB93 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FAEC40F81B2041ADA32CCF40B7EC7FA2 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_66372B6D969F45ABBAEE65A039C8F5B6 }}
+
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'peerly-authentication-management'
+          slot-name: 'Production'
+          package: .
+          clean: true
+          
